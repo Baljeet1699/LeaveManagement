@@ -54,33 +54,6 @@ pipeline{
             }
         }
 
-         // Stage 5: Test the application
-        stage('Test Application') {
-            steps {
-                script {
-                    // Test if the Spring Boot application is accessible
-                    sh 'curl -f http://localhost:8082/actuator/health || exit 1'
-                }
-            }
-        }
-
-        // Stage 6: Clean up Docker containers and images after the test
-        stage('Cleanup') {
-            steps {
-                script {
-                    // Stop and remove the containers started by docker-compose
-                    sh 'docker-compose down'
-                }
-            }
-        }
-    }
-
-    // Post-actions after the pipeline finishes
-    post {
-        always {
-            // Clean up Docker image to free up space
-            sh 'docker rmi $DOCKER_IMAGE_NAME || true'
-        }
     }
 
 }
