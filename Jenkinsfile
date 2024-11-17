@@ -4,6 +4,7 @@ pipeline{
     agent any
 
     environment{
+        BRANCH_NAME = 'main'
         DOCKER_IMAGE_NAME = "leavemanagement"
         MYSQL_CONTAINER = "mysqldb"
         MYSQL_HOST = "localhost"
@@ -14,7 +15,7 @@ pipeline{
         // stage 1 : checkout code from git
         stage('checkout'){
             steps{
-                git "https://github.com/Baljeet1699/LeaveManagement.git"
+                git branch: "${env.BRANCH_NAME}", url: "https://github.com/Baljeet1699/LeaveManagement.git"
             }
         }
 
