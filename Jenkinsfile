@@ -10,6 +10,10 @@ pipeline{
         MYSQL_HOST = "localhost"
     }
 
+    tools {
+            maven 'Maven 3.x'  // Referencing the Maven tool configured in Jenkins
+    }
+
     stages{
 
         // stage 1 : checkout code from git
