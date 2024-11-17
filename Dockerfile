@@ -1,6 +1,6 @@
 
 #FIRST STAGE
-FROM maven:3.8.6-openjdk-17 AS build
+FROM maven:latest AS build
 WORKDIR /app
 
 # copy pom.xml and install dependencies first to leverage the cache
