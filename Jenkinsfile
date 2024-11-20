@@ -8,6 +8,7 @@ pipeline{
         DOCKER_IMAGE_NAME = "leavemanagement"
         MYSQL_CONTAINER = "mysqldb"
         MYSQL_HOST = "localhost"
+        SONAR_TOKEN = credentials('sonarCreds')
         SONAR_HOME = tool "SonarScanner"
     }
 
@@ -43,7 +44,7 @@ pipeline{
                     // Debugging the SONAR_HOME environment variable and SonarQube Scanner location
                     echo "SONAR_HOME is: $SONAR_HOME"
                     sh "ls -l $SONAR_HOME/bin/sonar-scanner"  // Ensure sonar-scanner exists in the bin folder
-                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement -Dsonar.host.url=http://192.168.0.102:9000"
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement -Dsonar.host.url=http://192.168.0.102:9000 -Dsonar.login=${env.SONAR_TOKEN}"
                 }
               }
             }
