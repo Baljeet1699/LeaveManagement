@@ -44,7 +44,7 @@ pipeline{
                     // Debugging the SONAR_HOME environment variable and SonarQube Scanner location
                     echo "SONAR_HOME is: $SONAR_HOME"
                     sh "ls -l $SONAR_HOME/bin/sonar-scanner"  // Ensure sonar-scanner exists in the bin folder
-                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement -Dsonar.host.url=http://192.168.0.102:9000 -Dsonar.login=${env.SONAR_TOKEN}"
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement -Dsonar.host.url=http://192.168.0.102:9000 -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.exclusions=**/*.sock,**/*.ibd"
                 }
               }
             }
