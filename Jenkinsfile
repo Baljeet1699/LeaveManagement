@@ -39,7 +39,7 @@ pipeline{
         stage('Sonarqube analysis'){
             steps{
                 withSonarQubeEnv("SonarServer"){
-                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement"
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement  -Dsonar.host.url=http://localhost:9000"
                 }
             }
         }
