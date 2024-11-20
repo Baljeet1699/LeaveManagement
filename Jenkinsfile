@@ -8,6 +8,7 @@ pipeline{
         DOCKER_IMAGE_NAME = "leavemanagement"
         MYSQL_CONTAINER = "mysqldb"
         MYSQL_HOST = "localhost"
+        SONAR_HOME = tool "SonarScanner"
     }
 
     tools {
@@ -34,7 +35,25 @@ pipeline{
             }
         }
 
-        // stage 3 : Build the docker image using Dockerfile
+        // stage 3 : Sonarqube analysis
+        stage('Sonarqube analysis'){
+            steps{
+                withSonarQubeEnv("SonarServer"){
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=leavemanagement -Dsonar.projectKey=leavemanagement"
+                }
+            }
+        }
+
+        // stage 3.1 : Sonarqube quality gate
+        stage('Sonarqube Quality Gates'){
+            steps{
+                timeout(time: 1,unit: "MINUTES"){
+                    waitForQualityGate abortPipeline: false
+                }
+            }
+        }
+
+        // stage 4 : Build the docker image using Dockerfile
         stage('Build Docker Image'){
             steps{
                 script{
@@ -44,7 +63,7 @@ pipeline{
             }
         }
 
-        // Stage 4: Run Docker Compose to start MySQL and Spring Boot containers
+        // Stage 5: Run Docker Compose to start MySQL and Spring Boot containers
         stage('Docker Compose Up') {
             steps {
                 script {
